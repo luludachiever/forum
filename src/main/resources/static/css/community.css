@@ -1,10 +1,10 @@
 
 .body {
     backgroud-color: #efefef;
+    margin:30px;
 }
 .main {
     background-color: white;
-    margin: 30px;
 }
 .btn-publish {
     float: right;

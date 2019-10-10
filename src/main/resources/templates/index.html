@@ -14,53 +14,76 @@
 
     <!-- Optional theme -->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap-theme.min.css" integrity="sha384-6pzBo3FDv/PJ8r2KRkGHifhEocL+1X2rVCTTkUfGk7/0pbek5mMa1upzvWbrUbOZ" crossorigin="anonymous">
-
+    <link rel="stylesheet" href="css/index.css">
     <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+    <script src="https://ajax.aspnetcdn.com/ajax/jQuery/jquery-3.4.1.min.js"></script>
     </body>
 </head>
 <body>
-<nav class="navbar navbar-default">
+<div th:include="~{navigation :: nav}"></div>
+<div class="container-fluid main">
+    <div class="row">
+        <div class="col-lg-9 col-md-12 col-sm-12 col-xs-12">
+            <h2><span class="glyphicon glyphicon-align-left" aria-hidden="true"></span>discovery</h2>
+            <div class="media"  th:each="question: ${pagination.questions}">>
+                <div class="media-left">
+                    <a href="#">
+                        <img class="media-object img-rounded "
+                             th:src="${question.user.avatarUrl}">
 
-    <div class="container-fluid">
-        <!-- Brand and toggle get grouped for better mobile display -->
-        <div class="navbar-header">
-            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse"
-                    data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
-                <span class="sr-only">My Forum</span>
-            </button>
-            <a class="navbar-brand" href="#">My Forum</a>
-        </div>
-        <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-            <form class="navbar-form navbar-left">
-                <div class="form-group">
-                    <input type="text" class="form-control" placeholder="Search">
+                    </a>
+
                 </div>
-                <button type="submit" class="btn btn-default">Submit</button>
-            </form>
-    <ul class="nav navbar-nav navbar-right">
-        <li th:if="${session.user != null}">
-            <a href="pulish">Pulish</a>
-        </li>
+                <div class="media-body" >
+                    <h4 class="media-heading th.text=${question.title}"></h4>
+                    <span th:text="${question.description}"> </span> <br>
+                    <span class="text-desc"> <span th:text="${question.commentCount}"></span> reply . <span
+                            th:text="${question.viewCount}"></span> view. <span th:text="${#dates.format(question.gmtCreate,'dd MMMM yyyy HH:mm')}"> </span> </span>
 
-        <li class="dropdown" th:if="${session.user != null}"  >
+                </div>
 
-        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true"
-           aria-expanded="false">Me<span class="caret"></span></a>
-         <ul class="dropdown-menu">
-           <li><a href="#">Message Center</a></li>
-           <li><a href="#">Personal Info</a></li>
-           <li><a href="#">Log Out</a></li>
-        </ul>
+            </div>
 
-        <li th:if="${session.user == null}">
-            <a href="https://github.com/login/oauth/authorize?client_id=6c640528ec2e8dfdda83&redirect_uri=http://localhost:8080/callback&scope=user&state=19910805">Login</a>
-        </li>
-        </li>
-     </ul>
-    </div><!-- /.navbar-collapse -->
-</div><!-- /.container-fluid -->
-</nav>
+            <nav aria-label="Page navigation">
+                <ul class="pagination">
+                    <li th:if="${pagination.showFirstPage}">
+                        <a th:href="@{/(page=1)}" aria-label="Previous">
+                            <span aria-hidden="true">&lt;&lt;</span>
+                        </a>
+                    </li>
+                    <li th:if="${pagination.showPrevious}">
+                        <a th:href="@{/(page=${pagination.page - 1})}" aria-label="Previous">
+                            <span aria-hidden="true">&lt;</span>
+                        </a>
+                    </li>
+
+                    <li th:each="page: ${pagination.pages}" th:class="${pagination.page == page}? 'active' :''">
+                        <a th:href="@{/(page=${page})}" th:text="${page}" }></a></li>
+
+                    <li>
+                    <li th:if="${pagination.showNext}">
+                        <a th:href="@{/(page=${pagination.page + 1})}" aria-label="Previous">
+                            <span aria-hidden="true">&gt;</span>
+                        </a>
+                    </li>
+                    <li th:if="${pagination.showEndPage}">
+                        <a th:href="@{/(page=${pagination.totalPage})}" aria-label="Previous">
+                            <span aria-hidden="true">&gt;&gt;</span>
+                        </a>
+                    </li>
+
+
+                    </li>
+                </ul>
+            </nav>
+
+        </div>
+        <div class="col-lg-3 col-md-12 col-sm-12 col-xs-12">
+            <h3> popular topics</h3>
+        </div>
+    </div>
+</div>
 </body>
 </html>
