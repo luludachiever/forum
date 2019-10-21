@@ -30,6 +30,7 @@
         <h2><span class="glyphicon glyphicon-plus" aria-hidden="true"></span>advocate</h2>
 
         <form action="/publish" method="post">
+            <input type="hidden" name="id" th:value="${id}">
             <div class="form-group">
                 <label for="title">question head(simple)</label>
                 <input type="text" class="form-control" id="title" name = "title"  th:value="${title}" placeholder="question head">

@@ -15,7 +15,7 @@
                         data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
                     <span class="sr-only">My Forum</span>
                 </button>
-                <a class="navbar-brand" href="#">My Forum</a>
+                <a class="navbar-brand" href="/">My Forum</a>
             </div>
             <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
                 <form class="navbar-form navbar-left">
@@ -26,23 +26,20 @@
                 </form>
                 <ul class="nav navbar-nav navbar-right">
                     <li th:if="${session.user != null}">
-                        <a href="publish">Publish</a>
+                        <a href="/publish">Publish</a>
                     </li>
-
+                    <li th:if="${session.user == null}">
+                        <a href="https://github.com/login/oauth/authorize?client_id=6c640528ec2e8dfdda83&redirect_uri=http://localhost:8080/callback&scope=user&state=19910805">Login</a>
+                    </li>
                     <li class="dropdown" th:if="${session.user != null}"  >
-
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true"
                            aria-expanded="false">
                             <span th:text = "${session.user.getName()}"></span>
                             <span class="caret"></span></a>
                         <ul class="dropdown-menu">
                             <li><a href="/profile/questions">My Questions</a></li>
-                            <li><a href="#">Log Out</a></li>
+                            <li><a href="logout">Log Out</a></li>
                         </ul>
-
-                    <li th:if="${session.user == null}">
-                        <a href="https://github.com/login/oauth/authorize?client_id=6c640528ec2e8dfdda83&redirect_uri=http://localhost:8080/callback&scope=user&state=19910805">Login</a>
-                    </li>
                     </li>
                 </ul>
             </div><!-- /.navbar-collapse -->
